@@ -34,8 +34,6 @@ def setgenerator(write,filepath):
      # Access Spotify iteration
     spotify = spotipy.Spotify(token)
 
-    songs = ['whip it','eye of the tiger','johnny tarr'] #Need to delete this once I finish the CSV loader
-
     ids = []
     for song in songs:
         track = spotify.search(song, limit = 1, market = 'US')
