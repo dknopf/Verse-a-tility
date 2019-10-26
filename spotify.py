@@ -1,13 +1,14 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
+from KNN import kNN
 
 client_id = "1cc2b52f7c6447409439ddc56223fb26"
 client_secret = "c1e05ecad59f4208aea0fb91d79fdbd4"
 uri = "https://dknopf.github.io/Verse-a-tility"
 
 username = "nalutrip"
-scope = "playlist-read-private"
+scope = "playlist-read-private,playlist-modify-private,user-read-private"
 
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 
@@ -17,6 +18,7 @@ token = util.prompt_for_user_token(username,scope,client_id=client_id,client_sec
 
 sp = spotipy.Spotify(auth=token)
 
+userID = sp.me()['id']
 playlists = sp.user_playlists(username) #gives a list of user playlists
 
 songs = {}
@@ -63,3 +65,16 @@ for song in songList:
     tempo = features['tempo']
 
     userSongs[songID] = (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo))
+
+"""
+Finding top karaoke songs and Playlist Creation
+<*><*><*><*><*><*><*><*><*><*><*><*><*><*><*><*>
+"""
+
+top10 = kNN(10,userSongs)
+
+sp.user_playlist_create(userID,"Top 10 Karaoke Songs!",False,"Your Top 10 Karaoke Songs! Found by Verse-a-tility")
+playlists = sp.user_playlists(username)
+playlistID = playlists['items'][0]['id']
+for song in top10:
+    sp.user_playlist_add_track(userID,playlistID,song[0],position=None)
