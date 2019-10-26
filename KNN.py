@@ -12,7 +12,7 @@ and returns closest_k: an ordered list of the most karaokeable songs in the form
 """
 def kNN(k,songdic):
 
-    # Average generated from the list of good karaoke songs
+    # Average generated from the list of good karaoke songs, (acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo)
     avg = (0.19487723953488362,0.6460232558139537,0.6768981395348841,0.006793604372093021,0.18605953488372096,-6.775758139534885,0.08851116279069769,0.584454418604651,120.67776744186055)
 
     # Generate empty k length list
