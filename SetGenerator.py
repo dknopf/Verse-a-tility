@@ -12,7 +12,7 @@ Also generates an average feature set to be passed to a naive classifier
 Need to make the first part a function, and then pass a variable for writing CSVs so that it can be imported without constantly writing the CSVs
 """
 
-def setgenerator(write,filepath):
+def setGenerator(write,filepath):
     # Spotify Authorization informnation
     client_id = "1cc2b52f7c6447409439ddc56223fb26"
     client_secret = "c1e05ecad59f4208aea0fb91d79fdbd4"
