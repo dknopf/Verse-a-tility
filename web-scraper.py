@@ -26,7 +26,7 @@ def set_up_webdriver_page_source(url):
 
 # Create a csv where each song in song_list is a new line, writing to song_list.csv
 def write_songlist_csv(song_list, csv_given):
-    with open(csv_given, 'a') as csvFile:
+    with open(csv_given, 'a') as csvFile: # Opens it in append mode
         writer = csv.writer(csvFile)
         for song in song_list:
             writer.writerow([song])
@@ -67,54 +67,32 @@ def scrape_from_google(url):
         if temp_url != None and temp_url[:5] == "https" and re.findall("google", temp_url) == []:
             songs_for_this_url = find_songs(temp_url) # Creates a variable for the list of songs from temp_url
             write_songlist_csv(songs_for_this_url, 'song_list.csv') # writes to song_list.csv after each page so the code doesn't need to run all the way
-
+            break
 
 # Takes a URL and finds all the strings of songs in it
 def find_songs(url):
     # Create a temp webdriver
     content = set_up_webdriver_page_source(url)
     page_text = content.text # Gets the text that would be displayed on the webpage(url)
-    seen_open_quote = False
-
-    # A dumb way to search for text contained between two quotes
-    # Smarter way is to do it with regexps (tried below)
     list_of_songs = []
-    i = 0
-    while i < len(page_text):
-        if (page_text[i] == '“' or page_text[i] == '"') and seen_open_quote == False:
-            open_quote_index = i + 1
-            seen_open_quote = True
-        elif (page_text[i] == '”' or page_text[i] == '"') and seen_open_quote == True:
-            list_of_songs.append(page_text[open_quote_index:i])
-            seen_open_quote = False
-        i += 1
+    # Create a regular expression that checks if the regexp is preceeded by the
+    # Open quote character and is any number of characters followed by the close quote character
 
-    #attempt using regexps to create a regexps that is [num]+ at most 20 chars "-"
+    between_quotes = re.compile(r'(?<=“).*(?=”)')
+    all_between_quotes = re.findall(between_quotes, page_text)
+    list_of_songs += all_between_quotes
+
     # checks if preceeeded by a match for any \d is any digit, . is any char, (?=\s*-) checks if the NEXT string matches \s* (any white space chars) -
+
     between_num_dash = re.compile('\d*.*(?=\s*–)') #create a regexp that takes anything between a number and a dash
     all_num_dash_matches = re.findall(between_num_dash, page_text) # Get a list of all the matches of the regexp in the page
     list_of_songs += all_num_dash_matches
 
-    # position = 0
-    # while position < len(page_text):
-    #     match = between_num_dash.search(page_text, position)
-    #     if match != None:
-    #         list_of_songs.append(match.group(0))
-    #         position += match.end(0)
-    #     else:
-    #         break
-    
     return list_of_songs
-    # Tentative code for a regexp search for between_quotes
 
-    # between_quotes = re.compile(r'.*\".*\"')
-    # match = webpage_soup.find_all(between_quotes)
-    # result = between_quotes.search(page_text).group(0)
-    # print("match is", match)
-    # return match
 
 #creates a song list from the google page for the search "best Karaoke songs"
-# song_list_from_google = scrape_from_google("https://www.google.com/search?rlz=1C1CHFX_enUS704US704&ei=fYuzXdq9MY3b5gKxzITIBg&q=best+karaoke+songs&oq=best+karaoke+songs&gs_l=psy-ab.3..0i71l8.0.0..3240278...0.2..0.0.0.......0......gws-wiz.HjPC1IKlIYs&ved=0ahUKEwia8OGZzrjlAhWNrVkKHTEmAWkQ4dUDCAs&uact=5")
+song_list_from_google = scrape_from_google("https://www.google.com/search?rlz=1C1CHFX_enUS704US704&ei=fYuzXdq9MY3b5gKxzITIBg&q=best+karaoke+songs&oq=best+karaoke+songs&gs_l=psy-ab.3..0i71l8.0.0..3240278...0.2..0.0.0.......0......gws-wiz.HjPC1IKlIYs&ved=0ahUKEwia8OGZzrjlAhWNrVkKHTEmAWkQ4dUDCAs&uact=5")
 
 # Cleans the song_list.csv file
 # clean_csv('song_list.csv')
