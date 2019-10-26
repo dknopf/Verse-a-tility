@@ -73,8 +73,6 @@ Finding top karaoke songs and Playlist Creation
 
 top10 = kNN(10,userSongs)
 
-sp.user_playlist_create(userID,"Top 10 Karaoke Songs!",False,"Your Top 10 Karaoke Songs! Found by Verse-a-tility")
-playlists = sp.user_playlists(username)
-playlistID = playlists['items'][0]['id']
-for song in top10:
-    sp.user_playlist_add_track(userID,playlistID,song[0],position=None)
+playlistID = (sp.user_playlist_create(user = userID,name = "Your Top 10 Karaoke Songs! Found by Verse-a-tility",public = False))['id']
+
+sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
