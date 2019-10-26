@@ -27,7 +27,7 @@ def setGenerator(write,filepath):
     reader = csv.reader(fh, delimiter = ',')
     songs = []
     for line in reader:
-        song = line[0]
+        song = line
         songs.append(song)
     fh.close()
 
@@ -36,10 +36,13 @@ def setGenerator(write,filepath):
 
     ids = []
     for song in songs:
-        track = spotify.search(song, limit = 1, market = 'US')
-        id = track['tracks']['items'][0]['id']
-        name = track['tracks']['items'][0]['name']
-        ids.append((id,name))
+        try:
+            track = spotify.search(song, limit = 1, market = 'US')
+            id = track['tracks']['items'][0]['id']
+            name = track['tracks']['items'][0]['name']
+            ids.append((id,name))
+        except:
+            pass
 
     # Writes the CSV for all the song features for maybe implementing a better classifier
     if write:
@@ -50,8 +53,11 @@ def setGenerator(write,filepath):
     features = []
     for id,name in ids:
         fts = spotify.audio_features(id)[0]
-        flist = [name,id,fts['acousticness'],fts['danceability'],fts['energy'],fts['instrumentalness'],fts['liveness'],fts['loudness'],fts['speechiness'],fts['valence'],fts['tempo']]
-        features.append(flist)
+        try:
+            flist = [name,id,fts['acousticness'],fts['danceability'],fts['energy'],fts['instrumentalness'],fts['liveness'],fts['loudness'],fts['speechiness'],fts['valence'],fts['tempo']]
+            features.append(flist)
+        except:
+            pass
         if write:
             songcsv.write(flist[0] + ',' + flist[1] + ',' + str(flist[2]) + ',' + str(flist[3]) + ',' + str(flist[4]) + ',' + str(flist[5]) + ',' + str(flist[6]) + ',' + str(flist[7]) + ',' + str(flist[8]) + ',' + str(flist[9]) + ',' + str(flist[10])+'\n')
     if write:
