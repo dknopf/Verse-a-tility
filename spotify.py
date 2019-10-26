@@ -37,15 +37,14 @@ for playlist in playlists['items']:
         songDict = sp.user_playlist(username, playlist['id'], fields="tracks,next")
         playlistSongs = songDict['tracks']
 
-        try:
-            songs[playlistSongs['items'][0]['track']['id']]=(playlistSongs['items'][0]['track']['name'],playlistSongs['items'][0]['track']['artists'][0]['name'])
-        except:
-            print("empty boi")
-        if(i==0):
-            print(playlistSongs['items'])
-            i=3
+        for i in range(len(playlistSongs['items'])):
+            try:
+                songs[playlistSongs['items'][i]['track']['id']]=(playlistSongs['items'][i]['track']['name'],playlistSongs['items'][i]['track']['artists'][0]['name'])
+            except:
+                print("empty boi")
 
 print(songs)
+print(len(songs))
 """
 Dictionary Format:
 songID: (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo))
