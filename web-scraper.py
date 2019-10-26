@@ -1,22 +1,42 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait  # for implicit and explict waits
+from selenium.webdriver.chrome.options import Options  # for suppressing the browser
 from bs4 import BeautifulSoup
+import re
 import pandas as pd
 
-# Set webdriver to use Google Chrome
-driver = webdriver.Chrome()
+# Suppresses the opening of an actual browser window
+options = webdriver.ChromeOptions()
+options.add_argument('headless')
 
-# Test code for web scraping
-products=[] #List to store name of the product
-prices=[] #List to store price of the product
-ratings=[] #List to store rating of the product
+# Create a webdriver Object using url and returns the page that the driver is on
+def set_up_webdriver_page_source(url):
+    # Set webdriver to use Google Chrome
+    driver = webdriver.Chrome('C:/Users/daniel/Downloads/chromedriver_win32/chromedriver.exe', options=options)
 
-# Navigates to the webpage listed
-driver.get("https://www.flipkart.com/laptops/~buyback-guarantee-on-laptops-/pr?sid=6bo%2Cb5g&uniq")
+    # Navigates to the webpage listed
+    driver.get(url)
 
-#Unsure what this does but it was in the tutorial I found online
-# content = driver.page_source
-soup = BeautifulSoup(content) #creates a BeautifulSoup object, which represents the document as a nested data structed
-for a in soup.find_all("a"):
-    print(a.get('href'))
-    # temporary_webdriver = webdriver.Chrome("/usr/lib/chromium-browser/chromedriver")
-    # temporary_webdriver.get(a.get('href'))
+    #Unsure what this does but it was in the tutorial I found online
+    content = driver.page_source
+    return content
+
+def create_soup(url):
+    content = set_up_webdriver_page_source(url)
+    soup = BeautifulSoup(content, "lxml") #creates a BeautifulSoup object, which represents the document as a nested data structed
+    for link in soup.find_all("a"):
+        # Create a temporary variable 'url' that is equal to the href attribute of link
+        url = link.get('href')
+        # Checks whether the url is None or not and whether or not it is a valid url
+        if url != None and url[:5] == "https" and url[13:20] != "google":
+            find_songs(url)
+
+
+# Takes a URL and finds all the strings of songs in it
+def find_songs(url):
+    # Create a temp webdriver
+    content = set_up_webdriver_page_source(url)
+    webpage_soup = BeautifulSoup(content, "lxml")
+    print(temporary_soup.title)
+
+create_soup("https://www.google.com/search?rlz=1C1CHFX_enUS704US704&ei=fYuzXdq9MY3b5gKxzITIBg&q=best+karaoke+songs&oq=best+karaoke+songs&gs_l=psy-ab.3..0i71l8.0.0..3240278...0.2..0.0.0.......0......gws-wiz.HjPC1IKlIYs&ved=0ahUKEwia8OGZzrjlAhWNrVkKHTEmAWkQ4dUDCAs&uact=5")
