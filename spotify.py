@@ -2,13 +2,6 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
 
-
-def Merge(dict1, dict2):
-    """
-    Merges two Dictionarys
-    """
-    return(dict2.update(dict1))
-
 client_id = "1cc2b52f7c6447409439ddc56223fb26"
 client_secret = "c1e05ecad59f4208aea0fb91d79fdbd4"
 uri = "https://dknopf.github.io/Verse-a-tility"
@@ -28,20 +21,45 @@ playlists = sp.user_playlists(username) #gives a list of user playlists
 
 songs = {}
 
-i = 0
 for playlist in playlists['items']:
     """
     Each iteration of the loop gets all the songs for that playlist
     """
     if (playlist['owner']['id'] == username): #checks to see if it is a user created playlist vs a saved one
-        songDict = sp.user_playlist(username, playlist['id'], fields="tracks,next")
+        songDict = sp.user_playlist(username, playlist['id'], fields="tracks")
         playlistSongs = songDict['tracks']
-        
 
+        for i in range(len(playlistSongs['items'])):
+            try:
+                songs[playlistSongs['items'][i]['track']['id']]=(playlistSongs['items'][i]['track']['name'],playlistSongs['items'][i]['track']['artists'][0]['name'])
+            except:
+                print("empty boi") #for empty playlist
 
 """
-Dictionary Format:
-(songID,songTitle,songArtist,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo)
+Dictionary (userSongs) Format:
+songID: (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo))
 """
-
+songList = songs.items()
 userSongs = {}
+
+for song in songList:
+    """
+    Audio analysis for all user songs
+    """
+    songID = song[0]
+    songTitle = song[1][0]
+    songArtist = song[1][1]
+
+    features = sp.audio_features(songID)[0]
+
+    acousticness = features['acousticness']
+    danceability = features['danceability']
+    energy = features['energy']
+    instrumentalness = features['instrumentalness']
+    liveness = features['instrumentalness']
+    loudness = features['loudness']
+    speechiness = features['speechiness']
+    valence = features['valence']
+    tempo = features['tempo']
+
+    userSongs[songID] = (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo))
