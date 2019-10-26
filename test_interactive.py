@@ -24,7 +24,7 @@ def submit_url ():
     canvas1.create_window(150, 200, window=final_text)
 
 def submit_username ():
-    createToken(inputBox.get())
+    createTopTen(createToken(inputBox.get()))
     button2 = tk.Button(root, text='Please input the url you were directed to and hit me!',
                               command=submit_url,
                               fg='#1DB954',
@@ -32,7 +32,7 @@ def submit_username ():
                               font=('helvetica', 12))
     canvas1.delete(button1_created)
     canvas1.delete(base_text_created)
-    button2_created = canvas1.create_window(250, 150, window = button2)
+    button2_created = canvas1.create_window(300, 10, window = button2)
 
 button1 = tk.Button(text='Submit', command=submit_username, bg='black', fg='#1DB954')
 button1_created = canvas1.create_window(250, 150, window=button1)
