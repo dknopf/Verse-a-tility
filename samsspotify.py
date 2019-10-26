@@ -4,7 +4,12 @@ import spotipy.util as util
 import csv
 
 """
-acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo
+Song Features we care about: acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo
+
+Generates a CSV with the song features for every karaoke song given by a CSV
+Also generates an average feature set to be passed to a naive classifier
+
+Need to make the first part a function, and then pass a variable for writing CSVs so that it can be imported without constantly writing the CSVs
 """
 # Spotify Authorization informnation
 client_id = "1cc2b52f7c6447409439ddc56223fb26"
@@ -15,18 +20,20 @@ uri = "https://dknopf.github.io/Verse-a-tility"
 token = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret, proxies=None).get_access_token()
 
 # Open CSV of song names
-# filepath = ""
-# fh = open(filepath, 'r')
-# reader = csv.reader(fh, delimiter = ',')
-# songs = []
-# for line in reader:
-#     song = line[0]
-#     songs.append(song)
+filepath = ""
+fh = open(filepath, 'r')
+reader = csv.reader(fh, delimiter = ',')
+songs = []
+for line in reader:
+    song = line[0]
+    songs.append(song)
+fh.close()
 
-# # Access Spotify iteration
+ # Access Spotify iteration
 spotify = spotipy.Spotify(token)
 
-songs = ['whip it','eye of the tiger']
+songs = ['whip it','eye of the tiger','johnny tarr'] #Need to delete this once I finish the CSV loader
+
 ids = []
 for song in songs:
     track = spotify.search(song, limit = 1, market = 'US')
@@ -34,18 +41,35 @@ for song in songs:
     name = track['tracks']['items'][0]['name']
     ids.append((id,name))
 
-
+# Writes the CSV for all the song features for maybe implementing a better classifier
 songcsv = open("song-features.csv",'w')
 songcsv.write("Title, ID, Acousticness, Danceability, Energy, Instrumentalness, Liveness, Loudness, Speechiness, Valence, Tempo\n")
 
+# Generating song features for each song given
 features = []
-
 for id,name in ids:
     fts = spotify.audio_features(id)[0]
-    feat_tup = (name,id,fts['acousticness'],fts['danceability'],fts['energy'],fts['instrumentalness'],fts['liveness'],fts['loudness'],fts['speechiness'],fts['valence'],fts['tempo'])
-    features.append(feat_tup)
-    songcsv.write()
-print(features)
+    flist = [name,id,fts['acousticness'],fts['danceability'],fts['energy'],fts['instrumentalness'],fts['liveness'],fts['loudness'],fts['speechiness'],fts['valence'],fts['tempo']]
+    features.append(flist)
+    songcsv.write(flist[0] + ',' + flist[1] + ',' + str(flist[2]) + ',' + str(flist[3]) + ',' + str(flist[4]) + ',' + str(flist[5]) + ',' + str(flist[6]) + ',' + str(flist[7]) + ',' + str(flist[8]) + ',' + str(flist[9]) + ',' + str(flist[10])+'\n')
+songcsv.close()
+
+# Averaging all of the features together
+length = len(features)
+avg = [0,0,0,0,0,0,0,0,0]
+for list in features:
+    for i in range(len(avg)):
+        avg[i] += list[i+2]
+for i in range(len(avg)):
+    avg[i] = avg[i]/length
+
+average = avg
+
+
+
+"""
+Everything down here was just experimentation with the dictionary scaffolding of spotipy
+"""
 
 # song = "Whip it"
 # track = spotify.search(song, limit = 1, market = 'US')
