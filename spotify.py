@@ -21,7 +21,7 @@ def createTopTen(token):
     sp = spotipy.Spotify(auth=token)
 
     userID = sp.me()['id']
-    playlists = sp.user_playlists(username) #gives a Dictionary of user playlists
+    playlists = sp.user_playlists(userID) #gives a Dictionary of user playlists
 
     songs = {}
 
