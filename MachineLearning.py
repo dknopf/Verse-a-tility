@@ -41,6 +41,6 @@ def kNN(k,songlist):
 
     # Converting closest_k from [id] to []
     for i in range(len(closest_k)):
-        closest_k[i] = (songlist[closest_k[i]][0],songlist[closest_k[i]][1])
+        closest_k[i] = (closest_k[i],songlist[closest_k[i]][0],songlist[closest_k[i]][1])
 
     return closest_k
