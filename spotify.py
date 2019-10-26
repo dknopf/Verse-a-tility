@@ -4,7 +4,7 @@ import spotipy.util as util
 from KNN import kNN
 
 
-def createToken(username):
+def createTopTen(username):
     client_id = "1cc2b52f7c6447409439ddc56223fb26"
     client_secret = "c1e05ecad59f4208aea0fb91d79fdbd4"
     uri = "https://dknopf.github.io/Verse-a-tility"
@@ -15,9 +15,8 @@ def createToken(username):
 
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager) #creates spotify object to access API
 
-    return util.prompt_for_user_token(username,scope,client_id=client_id,client_secret=client_secret,redirect_uri=uri)
+    token = util.prompt_for_user_token(username,scope,client_id=client_id,client_secret=client_secret,redirect_uri=uri)
 
-def createTopTen(token):
     sp = spotipy.Spotify(auth=token)
 
     userID = sp.me()['id']
