@@ -2,6 +2,13 @@ import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
 
+
+def Merge(dict1, dict2):
+    """
+    Merges two Dictionarys
+    """
+    return(dict2.update(dict1))
+
 client_id = "1cc2b52f7c6447409439ddc56223fb26"
 client_secret = "c1e05ecad59f4208aea0fb91d79fdbd4"
 uri = "https://dknopf.github.io/Verse-a-tility"
@@ -19,18 +26,19 @@ sp = spotipy.Spotify(auth=token)
 
 playlists = sp.user_playlists(username) #gives a list of user playlists
 
-print(playlists)
+songs = {}
 
-songs = []
+i = 0
+for playlist in playlists['items']:
+    if (playlist['owner']['id'] == username):
+        songDict = sp.user_playlist(username, playlist['id'], fields="tracks,next")
+        playlistSongs = songDict['tracks']
+        print(playlistSongs)
 
-# for playlist in playlists:
-#     if playlist['owner']['id'] == username:
-#
 
 """
 Dictionary Format:
 (songID,songTitle,songArtist,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo)
-
 """
 
 userSongs = {}
