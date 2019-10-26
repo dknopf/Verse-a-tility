@@ -7,7 +7,7 @@ client_secret = "c1e05ecad59f4208aea0fb91d79fdbd4"
 uri = "https://dknopf.github.io/Verse-a-tility"
 
 username = "nalutrip"
-scope = playlist-read-private
+scope = "playlist-read-private"
 
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 
