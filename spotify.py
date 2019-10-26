@@ -21,7 +21,7 @@ def createTopTen(token):
     sp = spotipy.Spotify(auth=token)
 
     userID = sp.me()['id']
-    playlists = sp.user_playlists(username) #gives a Dictionary of user playlists
+    playlists = sp.user_playlists(userID) #gives a Dictionary of user playlists
 
     songs = {}
 
@@ -29,8 +29,8 @@ def createTopTen(token):
         """
         Each iteration of the loop gets all the songs for that playlist
         """
-        if (playlist['owner']['id'] == username): #checks to see if it is a user created playlist vs a saved one
-            songDict = sp.user_playlist(username, playlist['id'], fields="tracks")
+        if (playlist['owner']['id'] == userID): #checks to see if it is a user created playlist vs a saved one
+            songDict = sp.user_playlist(userID, playlist['id'], fields="tracks")
             playlistSongs = songDict['tracks']
 
             for i in range(len(playlistSongs['items'])):
