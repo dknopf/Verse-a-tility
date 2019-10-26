@@ -11,7 +11,7 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager) #cre
 
 """
 Dictionary Format:
-(index,[songID,songTitle,songArtist,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo])
+(songID,songTitle,songArtist,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo)
 
 """
 
