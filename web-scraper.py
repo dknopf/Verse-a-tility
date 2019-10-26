@@ -11,20 +11,19 @@ options = webdriver.ChromeOptions()
 options.add_argument('headless')
 options.add_argument('log-level=3')
 
-# Create a webdriver Object using url and returns the page that the driver is on
+"""
+Create a webdriver Object using url and returns the page that the driver is on
+"""
 def set_up_webdriver_page_source(url):
     # Set webdriver to use Google Chrome
     driver = webdriver.Chrome('C:/Users/daniel/Downloads/chromedriver_win32/chromedriver.exe', options=options)
-
-    # Navigates to the webpage listed
-    driver.get(url)
-
-    # The content is the body of the webpage
+    driver.get(url) # Navigates to the webpage listed
     content = driver.find_element_by_tag_name("body")
     return content
 
-
-# Create a csv where each song in song_list is a new line, writing to song_list.csv
+"""
+Create a csv where each song in song_list is a new line, writing to song_list.csv
+"""
 def write_songlist_csv(song_list, csv_given):
     with open(csv_given, 'a') as csvFile: # Opens it in append mode
         writer = csv.writer(csvFile)
@@ -33,8 +32,10 @@ def write_songlist_csv(song_list, csv_given):
 
     csvFile.close()
 
-# Cleans the CSV by deleting duplicates, empty lists, and strings that are too long to be songs
-# Right now it doesn't handle extra puncutation such as quotes, commas, or periods
+"""
+Cleans the CSV by deleting duplicates, empty lists, and strings that are too long to be songs
+Right now it doesn't handle extra puncutation such as commas and periods
+"""
 def clean_csv(csv_given):
     list_of_unique_songs = []
     with open(csv_given, 'r') as csvReader: # Open csv_given in read mode
@@ -51,8 +52,12 @@ def clean_csv(csv_given):
     csvReader.close()
     csvWriter.close()
 
-
-def scrape_from_google(url):
+"""
+Scrapes a google search page and creates a BeautifulSoup object of all the text in the page
+then searches through every non-google link in the search page and applies a scraping
+function to it
+"""
+def scrape_from_google(url, function):
     driver = webdriver.Chrome('C:/Users/daniel/Downloads/chromedriver_win32/chromedriver.exe', options=options)
 
     driver.get(url) # Navigates to webpage listed
@@ -63,13 +68,20 @@ def scrape_from_google(url):
         # Create a temporary variable 'url' that is equal to the href attribute of link
         temp_url = link.get('href')
         # Checks whether the url is None or not and whether or not it is a valid url
-        overall_song_list = []
         if temp_url != None and temp_url[:5] == "https" and re.findall("google", temp_url) == []:
-            songs_for_this_url = find_songs(temp_url) # Creates a variable for the list of songs from temp_url
-            write_songlist_csv(songs_for_this_url, 'song_list.csv') # writes to song_list.csv after each page so the code doesn't need to run all the way
-            break
+            function(temp_url)
 
-# Takes a URL and finds all the strings of songs in it
+
+"""
+Scrapes the top karaoke songs from a link
+"""
+def scrape_top_karaoke_songs(url):
+    songs_for_this_url = find_songs(url) # Creates a variable for the list of songs from temp_url
+    write_songlist_csv(songs_for_this_url, 'song_list.csv') # writes to song_list.csv after each page so the code doesn't need to run all the way
+
+"""
+Takes a URL and finds all the strings of songs in it
+"""
 def find_songs(url):
     # Create a temp webdriver
     content = set_up_webdriver_page_source(url)
@@ -92,7 +104,7 @@ def find_songs(url):
 
 
 #creates a song list from the google page for the search "best Karaoke songs"
-song_list_from_google = scrape_from_google("https://www.google.com/search?rlz=1C1CHFX_enUS704US704&ei=fYuzXdq9MY3b5gKxzITIBg&q=best+karaoke+songs&oq=best+karaoke+songs&gs_l=psy-ab.3..0i71l8.0.0..3240278...0.2..0.0.0.......0......gws-wiz.HjPC1IKlIYs&ved=0ahUKEwia8OGZzrjlAhWNrVkKHTEmAWkQ4dUDCAs&uact=5")
+song_list_from_google = scrape_from_google("https://www.google.com/search?rlz=1C1CHFX_enUS704US704&ei=fYuzXdq9MY3b5gKxzITIBg&q=best+karaoke+songs&oq=best+karaoke+songs&gs_l=psy-ab.3..0i71l8.0.0..3240278...0.2..0.0.0.......0......gws-wiz.HjPC1IKlIYs&ved=0ahUKEwia8OGZzrjlAhWNrVkKHTEmAWkQ4dUDCAs&uact=5", scrape_top_karaoke_songs)
 
 # Cleans the song_list.csv file
 # clean_csv('song_list.csv')
