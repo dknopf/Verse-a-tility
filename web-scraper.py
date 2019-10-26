@@ -2,19 +2,18 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait  # for implicit and explict waits
 from selenium.webdriver.chrome.options import Options  # for suppressing the browser
 from bs4 import BeautifulSoup
-import re
+import re #regular expressions
 import csv
-# import pandas as pd
 
 # Suppresses the opening of an actual browser window
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
-options.add_argument('log-level=3')
+options.add_argument('log-level=3') # Suppresses error messages
 
 """
 Create a webdriver Object using url and returns the page that the driver is on
 """
-def set_up_webdriver_page_source(url):
+def set_up_webdriver(url):
     # Set webdriver to use Google Chrome
     driver = webdriver.Chrome('C:/Users/daniel/Downloads/chromedriver_win32/chromedriver.exe', options=options)
     driver.get(url) # Navigates to the webpage listed
@@ -84,7 +83,7 @@ Takes a URL and finds all the strings of songs in it
 """
 def find_songs(url):
     # Create a temp webdriver
-    content = set_up_webdriver_page_source(url)
+    content = set_up_webdriver(url)
     page_text = content.text # Gets the text that would be displayed on the webpage(url)
     list_of_songs = []
     # Create a regular expression that checks if the regexp is preceeded by the
