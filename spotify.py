@@ -36,7 +36,7 @@ for playlist in playlists['items']:
     if (playlist['owner']['id'] == username): #checks to see if it is a user created playlist vs a saved one
         songDict = sp.user_playlist(username, playlist['id'], fields="tracks,next")
         playlistSongs = songDict['tracks']
-        
+
 
 
 """
