@@ -25,7 +25,7 @@ def kNN(k,songdic):
         # Calculate the 9 dimensional distance from the average "good" point
         distance = (math.sqrt((avg[0]-p2[0])**2+(avg[1]-p2[1])**2+(avg[2]-p2[2])**2+(avg[3]-p2[3])**2+(avg[4]-p2[4])**2+(avg[5]-p2[5])**2+(avg[6]-p2[6])**2+(avg[7]-p2[7])**2+(avg[8]-p2[8])**2))
         # Replace audio features with the distance float within the dictionary
-        songdic[id] = (songdic[id][0],songdicid[1],distance)
+        songdic[id] = (songdic[id][0],songdic[id][1],distance)
 
         # Checks distance of current song to those of the closest_k thus far
         for i in range(k):
