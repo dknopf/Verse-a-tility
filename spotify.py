@@ -19,7 +19,7 @@ token = util.prompt_for_user_token(username,scope,client_id=client_id,client_sec
 sp = spotipy.Spotify(auth=token)
 
 userID = sp.me()['id']
-playlists = sp.user_playlists(username) #gives a list of user playlists
+playlists = sp.user_playlists(username) #gives a Dictionary of user playlists
 
 songs = {}
 
@@ -73,6 +73,6 @@ Finding top karaoke songs and Playlist Creation
 
 top10 = kNN(10,userSongs)
 
-playlistID = (sp.user_playlist_create(user = userID,name = "Your Top 10 Karaoke Songs! Found by Verse-a-tility",public = False))['id']
+playlistID = (sp.user_playlist_create(user = userID,name = "Your Top 10 Karaoke Songs! Found by Verse-a-tility.",public = False))['id']
 
 sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
