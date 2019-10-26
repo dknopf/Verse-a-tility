@@ -13,7 +13,20 @@ client_credentials_manager = SpotifyClientCredentials(client_id=client_id, clien
 
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager) #creates spotify object to access API
 
-util.prompt_for_user_token(username,scope,client_id=client_id,client_secret=client_secret,redirect_uri=uri)
+token = util.prompt_for_user_token(username,scope,client_id=client_id,client_secret=client_secret,redirect_uri=uri)
+
+sp = spotipy.Spotify(auth=token)
+
+playlists = sp.user_playlists(username) #gives a list of user playlists
+
+print(playlists)
+
+songs = []
+
+# for playlist in playlists:
+#     if playlist['owner']['id'] == username:
+#
+
 """
 Dictionary Format:
 (songID,songTitle,songArtist,acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo)
