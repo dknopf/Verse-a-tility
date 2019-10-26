@@ -3,7 +3,9 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
 import csv
 
-
+"""
+acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo
+"""
 # Spotify Authorization informnation
 client_id = "1cc2b52f7c6447409439ddc56223fb26"
 client_secret = "c1e05ecad59f4208aea0fb91d79fdbd4"
@@ -24,17 +26,33 @@ token = SpotifyClientCredentials(client_id=client_id, client_secret=client_secre
 # # Access Spotify iteration
 spotify = spotipy.Spotify(token)
 
-# for song in songs:
-#     res = spotify.search(song, limit = 1, market = 'US')
-
-song = "Whip it"
-res = spotify.search(song, limit = 1, market = 'US')
-# print(res)
-for track in res['tracks']['items']:
-    id = track['id']
-
+songs = ['whip it','eye of the tiger']
+ids = []
+for song in songs:
+    track = spotify.search(song, limit = 1, market = 'US')
+    id = track['tracks']['items'][0]['id']
+    name = track['tracks']['items'][0]['name']
+    ids.append((id,name))
 
 
+songcsv = open("song-features.csv",'w')
+songcsv.write("Title, ID, Acousticness, Danceability, Energy, Instrumentalness, Liveness, Loudness, Speechiness, Valence, Tempo\n")
+
+features = []
+
+for id,name in ids:
+    fts = spotify.audio_features(id)[0]
+    feat_tup = (name,id,fts['acousticness'],fts['danceability'],fts['energy'],fts['instrumentalness'],fts['liveness'],fts['loudness'],fts['speechiness'],fts['valence'],fts['tempo'])
+    features.append(feat_tup)
+    songcsv.write()
+print(features)
+
+# song = "Whip it"
+# track = spotify.search(song, limit = 1, market = 'US')
+# id = track['tracks']['items'][0]['id']
+# fts = spotify.audio_features(id)[0]
+# comparison_tup = (fts['acousticness'],fts['danceability'],fts['energy'],fts['instrumentalness'],fts['liveness'],fts['loudness'],fts['speechiness'],fts['valence'],fts['tempo'])
+# print(comparison_tup)
 
 
 
