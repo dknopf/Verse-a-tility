@@ -44,7 +44,7 @@ def kNN(k,songdic):
                     break
 
     # Converting closest_k from [id] to [id,songTitle,songArtist]
-    for i in range(k):
-        closest_k[i] = (closest_k[i],songdic[closest_k[i]][0],songdic[closest_k[i]][1])
+    # for i in range(k):
+    #     closest_k[i] = (closest_k[i],songdic[closest_k[i]][0],songdic[closest_k[i]][1])
 
     return closest_k
