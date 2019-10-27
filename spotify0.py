@@ -1,7 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
-from KNN import kNN
+from KNN0 import kNN
 
 
 def createTopTen(username):

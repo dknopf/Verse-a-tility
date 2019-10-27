@@ -23,15 +23,15 @@ def kNN(k,songdic):
         # take the audio features for a given song
         p2 = songdic[id][2]
         # Calculate the 9 dimensional distance from the average "good" point
-        distance = (math.sqrt(((avg[0]-p2[0])/0.85172278917612)**2
-                                +((avg[1]-p2[1])/0.57212957365857)**2
-                                +((avg[2]-p2[2])/0.65426874799986)**2
-                                +((avg[3]-p2[3])/0.13654304306084)**2
-                                +((avg[4]-p2[4])/0.53479358532162)**2
-                                +((avg[5]-p2[5])/10.636845286776)**2
-                                +((avg[6]-p2[6])/0.31753369128471)**2
-                                +((avg[7]-p2[7])/0.84343775557373)**2
-                                +((avg[8]-p2[8])/100)**2))
+        distance = (math.sqrt(((avg[0]-p2[0])/10)**2
+                                +((avg[1]-p2[1])/2)**2
+                                +((avg[2]-p2[2])/5)**2
+                                +((avg[3]-p2[3]))**2
+                                +((avg[4]-p2[4])/2)**2
+                                +((avg[5]-p2[5])/20)**2
+                                +((avg[6]-p2[6]))**2
+                                +((avg[7]-p2[7])/5)**2
+                                +((avg[8]-p2[8])/20)**2))
         # Replace audio features with the distance float within the dictionary
         songdic[id] = (songdic[id][0],songdic[id][1],distance)
 
