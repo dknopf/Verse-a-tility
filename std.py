@@ -32,7 +32,7 @@ for line in reader:
         energy.append(float(line[4]))
         instrumentalness.append(float(line[5]))
         liveness.append(float(line[6]))
-        loudness.append(float(line[7]))
+        loudness.append((float(line[7])))
         speechiness.append(float(line[8]))
         valence.append(float(line[9]))
         tempo.append(float(line[10]))
