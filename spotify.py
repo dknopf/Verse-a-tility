@@ -77,3 +77,5 @@ def createTopTen(username):
     playlistID = (sp.user_playlist_create(user = userID,name = "Your Top 10 Karaoke Songs! Found by Verse-a-tility.",public = False))['id']
 
     sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
+
+createTopTen('1235165869')
