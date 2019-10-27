@@ -19,7 +19,7 @@ def createTopTen(username):
 
     sp = spotipy.Spotify(auth=token)
 
-    userID = sp.me()['id']command
+    userID = sp.me()['id']
     playlists = sp.user_playlists(userID) #gives a Dictionary of user playlists
 
     songs = {}
@@ -80,8 +80,4 @@ def createTopTen(username):
 
     sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
 
-<<<<<<< HEAD
-createTopTen('diamondstar14')
-=======
-createTopTen('csalim26')
->>>>>>> e92c3b8bc5e953a4328116e3daad71df2908c93a
+createTopTen('nalutrip')

@@ -10,7 +10,7 @@ Title, ID, Acousticness, Danceability, Energy, Instrumentalness, Liveness, Loudn
   0     1     2                3          4            5             6         7          8          9       10
 
 """
-fh = open("C:/Users/SEphron/Documents/Github/Verse-a-tility/song-features.csv",'r')
+fh = open("/Users/nalutripician/Documents/GitHub/Verse-a-tility/song-features.csv",'r')
 reader = csv.reader(fh,delimiter = ',')
 
 acousticness = []
@@ -40,6 +40,7 @@ fh.close()
 
 acousticness = np.std(acousticness)
 danceability = np.std(danceability)
+energy = np.std(energy)
 instrumentalness = np.std(instrumentalness)
 liveness = np.std(liveness)
 loudness = np.std(loudness)
@@ -47,4 +48,4 @@ speechiness = np.std(speechiness)
 valence = np.std(valence)
 tempo = np.std(tempo)
 
-open("std.text",'w').write("acousticness: " + str(acousticness) + "\ndanceability: " + str(danceability) + "\ninstrumentalness: " + str(instrumentalness) + "\nliveness: " + str(liveness) + "\nloudness: " + str(loudness) + "\nspeechiness: " + str(speechiness) + "\nvalence: " +  str(valence) + "\ntempo: " + str(tempo))
+open("std.text",'w').write("acousticness: " + str(acousticness) + "\ndanceability: " + str(danceability) + "\nenergy: " + str(energy) + "\ninstrumentalness: " + str(instrumentalness) + "\nliveness: " + str(liveness) + "\nloudness: " + str(loudness) + "\nspeechiness: " + str(speechiness) + "\nvalence: " +  str(valence) + "\ntempo: " + str(tempo))
