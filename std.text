@@ -18,3 +18,5 @@ rank:                                     ref:
 7) acousticness:      0.2395266291922919        /0.85172278917612
 8) loudness:          2.991428627916469         /10.636845286776
 9) tempo:             28.122537730057633        /100
+
+Based off of a ratio where tempo, the least important factor, is divided by the largest number
