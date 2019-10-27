@@ -4,7 +4,8 @@ import spotipy.util as util
 from KNN import kNN
 
 
-def createTopTen(username):
+def createTopTen():
+    username = input("Enter your Spotify Username: ")
     client_id = "1cc2b52f7c6447409439ddc56223fb26"
     client_secret = "c1e05ecad59f4208aea0fb91d79fdbd4"
     uri = "https://dknopf.github.io/Verse-a-tility"
@@ -81,5 +82,4 @@ def createTopTen(username):
     sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
 
 
-user = input("Enter your Spotify Username: ")
-createTopTen(user)
+createTopTen()
