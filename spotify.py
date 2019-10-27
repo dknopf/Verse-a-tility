@@ -67,7 +67,7 @@ def createTopTen(username):
 
             userSongs[songID] = (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo))
         except:
-            print("")
+            pass
 
     """
     Finding top karaoke songs and Playlist Creation
@@ -80,6 +80,10 @@ def createTopTen(username):
 
     sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
 
+<<<<<<< HEAD
 
 user = input("Enter your Spotify Username: ")
 createTopTen(user)
+=======
+createTopTen('saolep')
+>>>>>>> cbdb4b449d8a06a972e357de478775b6d19cc38d
