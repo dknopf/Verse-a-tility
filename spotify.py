@@ -52,20 +52,22 @@ def createTopTen(username):
         songID = song[0]
         songTitle = song[1][0]
         songArtist = song[1][1]
+        try:
+            features = sp.audio_features(songID)[0]
 
-        features = sp.audio_features(songID)[0]
+            acousticness = features['acousticness']
+            danceability = features['danceability']
+            energy = features['energy']
+            instrumentalness = features['instrumentalness']
+            liveness = features['instrumentalness']
+            loudness = features['loudness']
+            speechiness = features['speechiness']
+            valence = features['valence']
+            tempo = features['tempo']
 
-        acousticness = features['acousticness']
-        danceability = features['danceability']
-        energy = features['energy']
-        instrumentalness = features['instrumentalness']
-        liveness = features['instrumentalness']
-        loudness = features['loudness']
-        speechiness = features['speechiness']
-        valence = features['valence']
-        tempo = features['tempo']
-
-        userSongs[songID] = (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo))
+            userSongs[songID] = (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo))
+        except:
+            print("")
 
     """
     Finding top karaoke songs and Playlist Creation
@@ -78,4 +80,4 @@ def createTopTen(username):
 
     sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
 
-createTopTen('1235165869')
+createTopTen('csalim26')
