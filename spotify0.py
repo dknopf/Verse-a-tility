@@ -1,7 +1,7 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy.util as util
-from KNN import kNN
+from KNN0 import kNN
 
 
 def createTopTen(username):
@@ -80,6 +80,4 @@ def createTopTen(username):
 
     sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
 
-
-user = input("Enter your Spotify Username: ")
-createTopTen(user)
+createTopTen('saolep')
