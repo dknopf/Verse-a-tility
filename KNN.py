@@ -13,7 +13,7 @@ and returns closest_k: an ordered list of the most karaokeable songs in the form
 def kNN(k,songdic):
 
     # Average generated from the list of good karaoke songs, (acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo,popularity)
-    avg = (0.19846132027649757,0.645889400921659,0.6734566820276501,0.011107193271889403,0.18586543778801845,0.4787038231150853,0.08822258064516131,0.5824041474654376,0.5496456221198156,0.7156221198156683)
+    avg = (0.2444697192786831,0.15833042136638129,0.18666338209654074,0.07442656184492567,0.1499738350572088,0.13965890050056823,0.08923854841027239,0.2389087233514038,0.1271123360537627,0.133588214763193)
 
     # Generate empty k length list
     closest_k = [""]*k
@@ -23,16 +23,16 @@ def kNN(k,songdic):
         # take the audio features for a given song
         p2 = songdic[id][2]
         # Calculate the 9 dimensional distance from the average "good" point
-        distance = (math.sqrt(((avg[0]-p2[0])/0.85172278917612)**2
-                                +((avg[1]-p2[1])/0.57212957365857)**2
-                                +((avg[2]-p2[2])/0.65426874799986)**2
-                                +((avg[3]-p2[3])/0.13654304306084)**2
-                                +((avg[4]-p2[4])/0.53479358532162)**2
-                                +((avg[5]-p2[5])/10.636845286776)**2
-                                +((avg[6]-p2[6])/0.31753369128471)**2
-                                +((avg[7]-p2[7])/0.84343775557373)**2
-                                +((avg[8]-p2[8])/100)**2
-                                +((avg[9]-p2[9]))**2))
+        distance = (math.sqrt(((avg[0]-p2[0])/1)**2
+                                +((avg[1]-p2[1])/0.64756646216769)**2
+                                +((avg[2]-p2[2])/0.76343558282209)**2
+                                +((avg[3]-p2[3])/0.30441717791411)**2
+                                +((avg[4]-p2[4])/0.61337423312883)**2
+                                +((avg[5]-p2[5])/0.57120654396728)**2
+                                +((avg[6]-p2[6])/0.36498977505112)**2
+                                +((avg[7]-p2[7])/0.97713701431493)**2
+                                +((avg[8]-p2[8])/0.5198773006135)**2
+                                +((avg[9]-p2[9])/0.54638036809816)**2))
         # Replace audio features with the distance float within the dictionary
         songdic[id] = (songdic[id][0],songdic[id][1],distance)
 

@@ -36,7 +36,7 @@ def createTopTen():
             for i in range(len(playlistSongs['items'])):
                 try:
                     #id: (title,artist,popularity)
-                    songs[playlistSongs['items'][i]['track']['id']]=(playlistSongs['items'][i]['track']['name'],playlistSongs['items'][i]['track']['artists'][0]['name'],(playlistSongs['items'][i]['popularity'])/100)
+                    songs[playlistSongs['items'][i]['track']['id']]=(playlistSongs['items'][i]['track']['name'],playlistSongs['items'][i]['track']['artists'][0]['name'],(playlistSongs['items'][i]['popularity']))
                 except:
                     print("empty boi") #for empty playlist
 
@@ -67,7 +67,6 @@ def createTopTen():
             speechiness = features['speechiness']
             valence = features['valence']
             tempo = features['tempo']/220
-            #popularity = song['tracks']['items'][0]['popularity']
 
             userSongs[songID] = (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo,popularity))
         except:
