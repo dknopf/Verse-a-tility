@@ -1,6 +1,6 @@
 import csv
 import numpy as np
-import spotify
+#import spotify
 
 """
 File to find the standard deviation of the metrics within the training data in order to weight our difference

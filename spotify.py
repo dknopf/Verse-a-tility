@@ -35,7 +35,8 @@ def createTopTen():
 
             for i in range(len(playlistSongs['items'])):
                 try:
-                    songs[playlistSongs['items'][i]['track']['id']]=(playlistSongs['items'][i]['track']['name'],playlistSongs['items'][i]['track']['artists'][0]['name'])
+                    #id: (title,artist,popularity)
+                    songs[playlistSongs['items'][i]['track']['id']]=(playlistSongs['items'][i]['track']['name'],playlistSongs['items'][i]['track']['artists'][0]['name'],(playlistSongs['items'][i]['popularity'])/100)
                 except:
                     print("empty boi") #for empty playlist
 
@@ -45,7 +46,7 @@ def createTopTen():
     """
     songList = songs.items()
     userSongs = {}
-
+    print(songList)
     for song in songList:
         """
         Audio analysis for all user songs
@@ -53,6 +54,7 @@ def createTopTen():
         songID = song[0]
         songTitle = song[1][0]
         songArtist = song[1][1]
+        popularity = song[1][2]
         try:
             features = sp.audio_features(songID)[0]
 
@@ -61,12 +63,13 @@ def createTopTen():
             energy = features['energy']
             instrumentalness = features['instrumentalness']
             liveness = features['instrumentalness']
-            loudness = features['loudness']
+            loudness = 2**(features['loudness']/6)
             speechiness = features['speechiness']
             valence = features['valence']
-            tempo = features['tempo']
+            tempo = features['tempo']/220
+            #popularity = song['tracks']['items'][0]['popularity']
 
-            userSongs[songID] = (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo))
+            userSongs[songID] = (songTitle,songArtist,(acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo,popularity))
         except:
             pass
 
