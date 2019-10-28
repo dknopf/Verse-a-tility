@@ -1,22 +1,10 @@
-acousticness: 0.2395266291922919
-danceability: 0.16086338866863858
-energy: 0.18409676071107936
-instrumentalness: 0.03838893330923137
-liveness: 0.15042882997456686
-loudness: 2.991428627916469
-speechiness: 0.08932153796732004
-valence: 0.23724777971469507
-tempo: 28.122537730057633
-
-rank:                                     ref:
-1) instrumentalness:  0.03838893330923137
-2) speechiness:       0.08932153796732004
-3) liveness:          0.15042882997456686
-4) danceability:      0.16086338866863858
-5) energy:            0.18409676071107936
-6) valence:           0.23724777971469507
-7) acousticness:      0.2395266291922919
-8) loudness:          2.991428627916469         
-9) tempo:             28.122537730057633
-
-Based off of a ratio where tempo, the least important factor, is divided by the largest number
+acousticness: 0.2444697192786831
+danceability: 0.15833042136638129
+energy: 0.18666338209654074
+instrumentalness: 0.07442656184492567
+liveness: 0.1499738350572088
+loudness: 0.13965890050056823
+speechiness: 0.08923854841027239
+valence: 0.2389087233514038
+tempo: 0.1271123360537627
+popularity: 0.133588214763193
