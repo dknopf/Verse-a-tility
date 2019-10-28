@@ -46,7 +46,7 @@ def createTopTen():
     """
     songList = songs.items()
     userSongs = {}
-    print(songList)
+
     for song in songList:
         """
         Audio analysis for all user songs
