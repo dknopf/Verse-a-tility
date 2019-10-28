@@ -36,9 +36,9 @@ def createTopTen():
             for i in range(len(playlistSongs['items'])):
                 try:
                     #id: (title,artist,popularity)
-                    songs[playlistSongs['items'][i]['track']['id']]=(playlistSongs['items'][i]['track']['name'],playlistSongs['items'][i]['track']['artists'][0]['name'],(playlistSongs['items'][i]['popularity'])/100)
+                    songs[playlistSongs['items'][i]['track']['id']]=(playlistSongs['items'][i]['track']['name'],playlistSongs['items'][i]['track']['artists'][0]['name'],(playlistSongs['items'][i]['track']['popularity']))
                 except:
-                    print("empty boi") #for empty playlist
+                    pass #for empty playlist
 
     """
     Dictionary (userSongs) Format:
@@ -46,7 +46,6 @@ def createTopTen():
     """
     songList = songs.items()
     userSongs = {}
-    print(songList)
     for song in songList:
         """
         Audio analysis for all user songs
