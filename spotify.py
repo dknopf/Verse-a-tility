@@ -82,4 +82,4 @@ def createTopTen():
     sp.user_playlist_add_tracks(user=userID,playlist_id=playlistID,tracks=top10,position=None)
 
 
-#createTopTen()
+createTopTen()
