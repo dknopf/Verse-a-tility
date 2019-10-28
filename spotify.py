@@ -54,7 +54,7 @@ def createTopTen():
         songID = song[0]
         songTitle = song[1][0]
         songArtist = song[1][1]
-        popularity = song[1][2]
+        popularity = song[1][2]/100
         try:
             features = sp.audio_features(songID)[0]
 
