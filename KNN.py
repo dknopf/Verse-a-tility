@@ -32,7 +32,7 @@ def kNN(k,songdic):
                                 +((avg[6]-p2[6])/0.36498977505112)**2
                                 +((avg[7]-p2[7])/0.97713701431493)**2
                                 +((avg[8]-p2[8])/0.5198773006135)**2
-                                +((avg[9]-p2[9])//0.54638036809816)**2))
+                                +((avg[9]-p2[9])/0.54638036809816)**2))
         # Replace audio features with the distance float within the dictionary
         songdic[id] = (songdic[id][0],songdic[id][1],distance)
 
