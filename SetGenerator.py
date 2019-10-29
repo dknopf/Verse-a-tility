@@ -76,11 +76,11 @@ def setGenerator(write,filepath):
     average = avg
     return average
 
-# res =setGenerator(True,"C:/Users/SEphron/Documents/GitHub/Verse-a-tility/song_list.csv")
+# res =setGenerator(True,"song_list.csv")
 # results = ""
 # for i in res:
 #     results = results + (str(i) + ",")
-
+#
 # open("avg.txt",'w').write(results)
 """
 Everything down here was just experimentation with the dictionary scaffolding of spotipy

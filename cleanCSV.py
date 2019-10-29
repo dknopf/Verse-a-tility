@@ -15,7 +15,7 @@ def cleanCSV(csv_given):
         reader = csv.reader(csvReader)
         for line in reader: # Iterate through each line (element) in the csv read file
             if line != []:
-                clean_title = re.sub(r'\.\s*|,|\’|\'|\“|\(|\)\s*|\"|\'|\!|\?|^\s+|\s+$|[0-9]', '', str(line[0]))
+                clean_title = re.sub(r'\.\s*|,|\”|\’|\'|\“|\(|\)\s*|\"|\'|\!|\?|^\s+|\s+$|[0-9]', '', str(line[0]).lower())
                 if len(clean_title) < 25 and clean_title not in list_of_unique_songs:
                     list_of_unique_songs.append(clean_title)
 

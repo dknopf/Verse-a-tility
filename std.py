@@ -10,7 +10,7 @@ Title, ID, Acousticness, Danceability, Energy, Instrumentalness, Liveness, Loudn
   0     1     2                3          4            5             6         7          8          9       10        11
 
 """
-fh = open("/Users/nalutripician/Documents/GitHub/Verse-a-tility/song-features.csv",'r')
+fh = open("song-features.csv",'r')
 reader = csv.reader(fh,delimiter = ',')
 
 acousticness = []
