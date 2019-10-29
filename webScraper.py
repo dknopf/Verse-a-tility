@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait  # for implicit and explict waits
 from selenium.webdriver.chrome.options import Options  # for suppressing the browser
 from bs4 import BeautifulSoup
-from cleanCSV import cleanCSV
+from CleanCSV import cleanCSV
 import re #regular expressions
 import csv
 
@@ -10,6 +10,8 @@ import csv
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
 options.add_argument('log-level=3') # Suppresses error messages
+
+# Creates a Google Chrome webDriver object
 driver = webdriver.Chrome('C:/Users/daniel/Downloads/chromedriver_win32/chromedriver.exe', options=options)
 
 
