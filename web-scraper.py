@@ -11,7 +11,10 @@ options.add_argument('headless')
 options.add_argument('log-level=3') # Suppresses error messages
 
 """
-Create a webdriver Object using url and returns the page that the driver is on
+Create a webdriver Object using url and returns the WebElement that contains the body tag
+
+url: string
+returns: WebElement object
 """
 def set_up_webdriver(url):
     # Set webdriver to use Google Chrome
@@ -22,6 +25,10 @@ def set_up_webdriver(url):
 
 """
 Create a csv where each song in song_list is a new line, writing to song_list.csv
+
+song_list: A list of strings that are songs
+csv_given: A csv file
+returns: None, modifies csv_given
 """
 def write_songlist_csv(song_list, csv_given):
     with open(csv_given, 'a') as csvFile: # Opens it in append mode
@@ -34,6 +41,9 @@ def write_songlist_csv(song_list, csv_given):
 """
 Cleans the CSV by deleting duplicates, empty lists, and strings that are too long to be songs
 Right now it doesn't handle extra puncutation such as commas and periods
+
+CSV_given: an existing csv
+Returns: None, just modifies csv_given
 """
 def clean_csv(csv_given):
     list_of_unique_songs = []
@@ -55,6 +65,10 @@ def clean_csv(csv_given):
 Scrapes a google search page and creates a BeautifulSoup object of all the text in the page
 then searches through every non-google link in the search page and applies a scraping
 function to it
+
+url: string, the url of a google search results page
+function: function, a function which can scrape through a link
+returns: None, runs function on each link in the search page
 """
 def scrape_from_google(url, function):
     driver = webdriver.Chrome('C:/Users/daniel/Downloads/chromedriver_win32/chromedriver.exe', options=options)
@@ -73,6 +87,9 @@ def scrape_from_google(url, function):
 
 """
 Scrapes the top karaoke songs from a link
+
+url: string
+returns: None, writes to a csv
 """
 def scrape_top_karaoke_songs(url):
     songs_for_this_url = find_songs(url) # Creates a variable for the list of songs from temp_url
@@ -80,6 +97,9 @@ def scrape_top_karaoke_songs(url):
 
 """
 Takes a URL and finds all the strings of songs in it
+
+url: string
+returns: list
 """
 def find_songs(url):
     # Create a temp webdriver
