@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait  # for implicit and explict waits
 from selenium.webdriver.chrome.options import Options  # for suppressing the browser
 from bs4 import BeautifulSoup
-from cleanCSV import cleanCSV
+from CleanCSV import cleanCSV
 import re #regular expressions
 import csv
 
@@ -10,24 +10,9 @@ import csv
 options = webdriver.ChromeOptions()
 options.add_argument('headless')
 options.add_argument('log-level=3') # Suppresses error messages
+
+# Creates a Google Chrome webDriver object
 driver = webdriver.Chrome('C:/Users/daniel/Downloads/chromedriver_win32/chromedriver.exe', options=options)
-
-
-"""
-Create a csv where each song in song_list is a new line, writing to csv_given and then cleaning it
-
-song_list: A list of strings that are songs
-csv_given: str, a csv file (will create one if the variable file doesn't exist)
-returns: None, modifies and cleans csv_given
-"""
-def writeSonglistCSV(song_list, csv_given):
-    with open(csv_given, 'a') as csvFile: # Opens it in append mode
-        writer = csv.writer(csvFile)
-        for song in song_list:
-            writer.writerow([song])
-
-    csvFile.close()
-    cleanCSV(csv_given)
 
 """
 Scrapes a google search page and creates a BeautifulSoup object of all the text in the page
@@ -51,7 +36,6 @@ def scrapeFromGoogle(url, function):
             if temp_url != None and temp_url[:5] == "https" and re.findall("google", temp_url) == []:
                 function(temp_url)
 
-
 """
 Scrapes the top karaoke songs from a link
 
@@ -61,6 +45,24 @@ returns: None, writes to a csv
 def scrapeTopKaraokeSongs(url):
     songs_for_this_url = findSongs(url) # Creates a variable for the list of songs from temp_url
     writeSonglistCSV(songs_for_this_url, 'song_list.csv') # writes to song_list.csv after each page so the code doesn't need to run all the way
+
+
+"""
+Create a csv where each song in song_list is a new line, writing to csv_given and then cleaning it
+
+song_list: A list of strings that are songs
+csv_given: str, a csv file (will create one if the variable file doesn't exist)
+returns: None, modifies and cleans csv_given
+"""
+def writeSonglistCSV(song_list, csv_given):
+    with open(csv_given, 'a') as csvFile: # Opens it in append mode
+        writer = csv.writer(csvFile)
+        for song in song_list:
+            writer.writerow([song])
+
+    csvFile.close()
+    cleanCSV(csv_given)
+
 
 """
 Takes a URL and finds all the strings of songs in it
