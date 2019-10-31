@@ -1,5 +1,6 @@
 import math
 from SetGenerator import setGenerator
+import numpy as np
 
 """
 Think the goal here is just to use K-Nearest Neighbor to naively find what is closest to the average from setGenerator
@@ -15,6 +16,10 @@ def kNN(k,songdic):
     # Average generated from the list of good karaoke songs, (acousticness,danceability,energy,instrumentalness,liveness,loudness,speechiness,valence,tempo,popularity)
     avg = (0.22645244765258207,0.6289483568075119,0.6585407042253522,0.022100172323943658,0.18817370892018778,0.45301491149667406,0.0841950704225352,0.5996201877934273,0.5458576611182243,0.693521126760564)
     # OLD AVERAGE = avg = (0.19846132027649757,0.645889400921659,0.6734566820276501,0.011107193271889403,0.18586543778801845,0.4787038231150853,0.08822258064516131,0.5824041474654376,0.5496456221198156,0.7156221198156683)
+
+    #Test for Manalobis distance, want a 10-d numpy array where each feature is its own dimention
+    #We want all of the data in this array so manalonobis distance can be calculated accurately
+    data = array()
 
     # Generate empty k length list
     closest_k = [""]*k
