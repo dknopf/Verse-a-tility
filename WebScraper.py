@@ -1,6 +1,5 @@
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait  # for implicit and explict waits
-from selenium.webdriver.chrome.options import Options  # for suppressing the browser
+from selenium.webdriver.chrome.options import Options  # for suppressing the browser head
 from bs4 import BeautifulSoup
 from CleanCSV import cleanCSV
 import re #regular expressions
@@ -44,21 +43,21 @@ returns: None, writes to a csv
 """
 def scrapeTopKaraokeSongs(url):
     songs_for_this_url = findSongs(url) # Creates a variable for the list of songs from temp_url
-    writeSonglistCSV(songs_for_this_url, 'song_list.csv') # writes to song_list.csv after each page so the code doesn't need to run all the way
+    writeListCSV(songs_for_this_url, 'song_list.csv') # writes to song_list.csv after each page so the code doesn't need to run all the way
 
 
 """
 Create a csv where each song in song_list is a new line, writing to csv_given and then cleaning it
 
-song_list: A list of strings that are songs
+xs: A list of strings
 csv_given: str, a csv file (will create one if the variable file doesn't exist)
 returns: None, modifies and cleans csv_given
 """
-def writeSonglistCSV(song_list, csv_given):
+def writeListCSV(xs, csv_given):
     with open(csv_given, 'a') as csvFile: # Opens it in append mode
         writer = csv.writer(csvFile)
-        for song in song_list:
-            writer.writerow([song])
+        for x in xs:
+            writer.writerow([xs])
 
     csvFile.close()
     cleanCSV(csv_given)
@@ -91,9 +90,18 @@ def findSongs(url):
     return list_of_songs
 
 
+def findItems(url, reg_exp):
+    driver.get(url) # Navigates to the webpage listed
+    page_text = driver.find_element_by_tag_name("body").text
+    list_of_items = re.findall(reg_exp, page_text)
+
+    return list_of_items
+
+
+
 #creates a song list from the google page for the search "best Karaoke songs"
 first_google_karaoke_page = "https://www.google.com/search?rlz=1C1CHFX_enUS704US704&ei=fYuzXdq9MY3b5gKxzITIBg&q=best+karaoke+songs&oq=best+karaoke+songs&gs_l=psy-ab.3..0i71l8.0.0..3240278...0.2..0.0.0.......0......gws-wiz.HjPC1IKlIYs&ved=0ahUKEwia8OGZzrjlAhWNrVkKHTEmAWkQ4dUDCAs&uact=5"
 second_google_karaoke_page = 'https://www.google.com/search?q=best+karaoke+songs&rlz=1C1CHFX_enUS704US704&sxsrf=ACYBGNSUVbGAY3wYZEeFcHS-g988vIDPPg:1572323047807&ei=5763XbDzMMOq_QbiwYmwBA&start=10&sa=N&ved=0ahUKEwjwgvLlz8DlAhVDVd8KHeJgAkYQ8tMDCOwC&biw=1536&bih=752'
 third_google_karaoke_page = "https://www.google.com/search?q=best+karaoke+songs&rlz=1C1CHFX_enUS704US704&sxsrf=ACYBGNQMBfiNSRNdcKWlCnhEd4tvmuecqQ:1572323051452&ei=6763XYyVG8-k_Qb5kYWACw&start=20&sa=N&ved=0ahUKEwjMttDnz8DlAhVPUt8KHflIAbA4ChDy0wMIhwE&biw=1536&bih=752"
 fourth_google_karaoke_page = "https://www.google.com/search?q=best+karaoke+songs&rlz=1C1CHFX_enUS704US704&sxsrf=ACYBGNTWVdePOUWYNiaEQBWdRhG__7cuMw:1572323189665&ei=db-3XbyQKKiyggff17voBw&start=30&sa=N&ved=0ahUKEwj8nsSp0MDlAhUomeAKHd_rDn04FBDy0wMIhwE&biw=1536&bih=752"
-song_list_from_google = scrapeFromGoogle(first_google_karaoke_page, scrapeTopKaraokeSongs)
+# song_list_from_google = scrapeFromGoogle(first_google_karaoke_page, scrapeTopKaraokeSongs)
