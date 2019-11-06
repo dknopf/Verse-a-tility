@@ -20,9 +20,10 @@ function to it
 
 url: string, the url of a google search results page
 function: function, a function which can scrape through a link
+csv_out: string, a csv file name
 returns: None, runs function on each link in the search page
 """
-def scrapeFromGoogle(url, function):
+def scrapeFromGoogle(url, function, csv_out):
     driver.get(url)
     soup = BeautifulSoup(driver.page_source, "lxml") #creates a BeautifulSoup object, which represents the document as a nested data structed
     unique_links = []
@@ -31,19 +32,21 @@ def scrapeFromGoogle(url, function):
         temp_url = link.get('href')
         if temp_url not in unique_links:
             unique_links.append(temp_url)
+            print("unique links is", unique_links)
             # Checks whether the url is None or not and whether or not it is a valid url
             if temp_url != None and temp_url[:5] == "https" and re.findall("google", temp_url) == []:
-                function(temp_url)
+                function(temp_url, csv_out)
 
 """
 Scrapes the top karaoke songs from a link
 
 url: string
+csv_out: string, a csv name
 returns: None, writes to a csv
 """
-def scrapeTopKaraokeSongs(url):
+def scrapeTopKaraokeSongs(url, csv_out):
     songs_for_this_url = findSongs(url) # Creates a variable for the list of songs from temp_url
-    writeListCSV(songs_for_this_url, 'song_list.csv') # writes to song_list.csv after each page so the code doesn't need to run all the way
+    writeListCSV(songs_for_this_url, csv_out) # writes to song_list.csv after each page so the code doesn't need to run all the way
 
 
 """
@@ -53,14 +56,14 @@ xs: A list of strings
 csv_given: str, a csv file (will create one if the variable file doesn't exist)
 returns: None, modifies and cleans csv_given
 """
-def writeListCSV(xs, csv_given):
-    with open(csv_given, 'a') as csvFile: # Opens it in append mode
+def writeListCSV(item_list, csv_out):
+    with open(csv_out, 'a') as csvFile: # Opens it in append mode
         writer = csv.writer(csvFile)
-        for x in xs:
-            writer.writerow([xs])
+        for item in item_list:
+            writer.writerow([item])
 
     csvFile.close()
-    cleanCSV(csv_given)
+    cleanCSV(csv_out)
 
 
 """
@@ -89,7 +92,13 @@ def findSongs(url):
 
     return list_of_songs
 
+"""
+Abstract code for finding items in a page using regexps
 
+url: string
+reg_exp: re, a regular expression
+return: list
+"""
 def findItems(url, reg_exp):
     driver.get(url) # Navigates to the webpage listed
     page_text = driver.find_element_by_tag_name("body").text
@@ -104,4 +113,4 @@ first_google_karaoke_page = "https://www.google.com/search?rlz=1C1CHFX_enUS704US
 second_google_karaoke_page = 'https://www.google.com/search?q=best+karaoke+songs&rlz=1C1CHFX_enUS704US704&sxsrf=ACYBGNSUVbGAY3wYZEeFcHS-g988vIDPPg:1572323047807&ei=5763XbDzMMOq_QbiwYmwBA&start=10&sa=N&ved=0ahUKEwjwgvLlz8DlAhVDVd8KHeJgAkYQ8tMDCOwC&biw=1536&bih=752'
 third_google_karaoke_page = "https://www.google.com/search?q=best+karaoke+songs&rlz=1C1CHFX_enUS704US704&sxsrf=ACYBGNQMBfiNSRNdcKWlCnhEd4tvmuecqQ:1572323051452&ei=6763XYyVG8-k_Qb5kYWACw&start=20&sa=N&ved=0ahUKEwjMttDnz8DlAhVPUt8KHflIAbA4ChDy0wMIhwE&biw=1536&bih=752"
 fourth_google_karaoke_page = "https://www.google.com/search?q=best+karaoke+songs&rlz=1C1CHFX_enUS704US704&sxsrf=ACYBGNTWVdePOUWYNiaEQBWdRhG__7cuMw:1572323189665&ei=db-3XbyQKKiyggff17voBw&start=30&sa=N&ved=0ahUKEwj8nsSp0MDlAhUomeAKHd_rDn04FBDy0wMIhwE&biw=1536&bih=752"
-# song_list_from_google = scrapeFromGoogle(first_google_karaoke_page, scrapeTopKaraokeSongs)
+song_list_from_google = scrapeFromGoogle(first_google_karaoke_page, scrapeTopKaraokeSongs, 'hello_world.csv')
