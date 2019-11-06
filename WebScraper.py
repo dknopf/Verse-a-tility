@@ -32,7 +32,6 @@ def scrapeFromGoogle(url, function, csv_out):
         temp_url = link.get('href')
         if temp_url not in unique_links:
             unique_links.append(temp_url)
-            print("unique links is", unique_links)
             # Checks whether the url is None or not and whether or not it is a valid url
             if temp_url != None and temp_url[:5] == "https" and re.findall("google", temp_url) == []:
                 function(temp_url, csv_out)
