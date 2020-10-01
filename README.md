@@ -13,3 +13,5 @@ Make executable
   usability for nontech people
 Investigate Standard deviations for weighting the average
 Maybe: How karaokey is your music?
+
+![logo](https://github.com/dknopf/Verse-a-tility/blob/master/Verse-a-tility_logo.jpg)
